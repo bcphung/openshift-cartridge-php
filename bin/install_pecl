@@ -40,7 +40,7 @@ function install_pecl() {
     if [ "${1}" == "phalcon" ]; then
         local name=phalcon-v${2}
         download_and_unpack ${name}.tar.gz https://github.com/phalcon/cphalcon/archive/${name}.tar.gz cphalcon-${name}
-        pushd cphalcon-${name}/build/64bits
+        pushd cphalcon-${name}/ext
     else
         local name=${1}-${2}
         download_and_unpack ${name}.tgz http://pecl.php.net/get/${name}.tgz
