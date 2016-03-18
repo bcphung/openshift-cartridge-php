@@ -1,23 +1,24 @@
 # Openshift PHP Plugin Cartridge
-Welcome to the world of [PHP-FPM](http://php.net/manual/en/book.fpm.php) within [openshift](https://www.openshift.com/).
+Welcome to the world of [PHP-FPM](http://php.net/manual/en/book.fpm.php) within [OpenShift](https://www.openshift.com/).
 
-Currently this cartridge works well the [boekkooi NGINX cartridge](https://github.com/boekkooi/openshift-cartridge-nginx).
+Currently this cartridge works well the [NGINX cartridge](https://github.com/bcphung/openshift-cartridge-nginx).
 
 You can add this cartridge to your application using:
 ```BASH
-rhc cartridge add -a myapp http://cartreflect-claytondev.rhcloud.com/github/boekkooi/openshift-cartridge-php
+rhc cartridge add -a myapp http://cartreflect-claytondev.rhcloud.com/github/bcphung/openshift-cartridge-php
 ```
 
 If you want to install a specific PHP version you can add `--env OPENSHIFT_PHP_VERSION=<version>` to the command.
-For example to install PHP 5.5.22 you can use:
+For example to install PHP 5.6.19 you can use:
 ```BASH
-rhc cartridge add -a myapp --env OPENSHIFT_PHP_VERSION=5.5.22 http://cartreflect-claytondev.rhcloud.com/github/boekkooi/openshift-cartridge-php
+rhc cartridge add -a myapp --env OPENSHIFT_PHP_VERSION=5.6.19 http://cartreflect-claytondev.rhcloud.com/github/bcphung/openshift-cartridge-php
 ```
 
 ## Versions
 Currently this cartridge has the following versions:
-- PHP 5.5.22
-- PHP 5.6.16
+- PHP 5.5.33
+- PHP 5.6.19
+- PHP 7.0.4
 
 If you need another version you can compile it yourself and submit a PR to get it integrated.
 
@@ -51,11 +52,11 @@ In your application create the following directories:
 .openshift/fpm/
 ```
 
-In the `cli` directory create the `php.ini.erb` file and copy the content from [`conf/php.ini.erb`](https://github.com/boekkooi/openshift-cartridge-php/blob/master/conf/php.ini.erb) into it.
+In the `cli` directory create the `php.ini.erb` file and copy the content from [`conf/php.ini.erb`](https://github.com/bcphung/openshift-cartridge-php/blob/master/conf/php.ini.erb) into it.
 Now you can customize the cli php configuration.
 
-In the `fpm` directory create the `php.ini.erb` file and copy the content from [`conf/php-fpm.ini.erb`](https://github.com/boekkooi/openshift-cartridge-php/blob/master/conf/php-fpm.ini.erb) into it.
-Also create the `php-fpm.conf.erb` file and copy the content from [`conf/php-fpm.conf.erb`](https://github.com/boekkooi/openshift-cartridge-php/blob/master/conf/php-fpm.conf.erb) into it.
+In the `fpm` directory create the `php.ini.erb` file and copy the content from [`conf/php-fpm.ini.erb`](https://github.com/bcphung/openshift-cartridge-php/blob/master/conf/php-fpm.ini.erb) into it.
+Also create the `php-fpm.conf.erb` file and copy the content from [`conf/php-fpm.conf.erb`](https://github.com/bcphung/openshift-cartridge-php/blob/master/conf/php-fpm.conf.erb) into it.
 Now you can customize the php-fpm configuration.
 
 ## Composer/PEAR
@@ -68,27 +69,27 @@ If you really need PEAR then download it your self using [`php go-pear.phar`](ht
 If you have created `.openshift/action_hooks/build` you can create the `.openshift/php-pecl.txt` to auto install pecl extensions.
 This file must constain have a pecl extension name and version per line for example:
 ```
-apcu 4.0.7
-mongo 1.6.5
+apcu 5.1.3
+mongodb 1.1.4
 ```
-Note for Openshift online: even though the scripts should automatically add the extension declaration in the php.ini files, if you have custom ini.erb files the extension declaration might be overwritten when they are deployed. In that case you must declare the extension manually in your .ini.erb files.
+Note for Openshift Online: even though the scripts should automatically add the extension declaration in the php.ini files, if you have custom ini.erb files the extension declaration might be overwritten when they are deployed. In that case you must declare the extension manually in your .ini.erb files.
 
 ### Phalcon
 There is special support for [phalcon](http://phalconphp.com/) you can simply install it by adding the following to your `.openshift/php-pecl.txt` file.
 ```
-phalcon 1.3.4
+phalcon 2.0.10
 ```
 Don't forget to change your `.openshift/nginx.conf.erb` according to the [phalcon nginx installation notes](http://docs.phalconphp.com/en/latest/reference/nginx.html).
 
 *Be aware that to compile phalcon 2.x you need a medium gear because 1GB of RAM is required*
 
 ### Compiling a new version
-To compile a new version you will first need a openshift application.
+To compile a new version you will first need a OpenShift application.
 ```BASH
-rhc create-app nginx http://cartreflect-claytondev.rhcloud.com/github/boekkooi/openshift-cartridge-nginx
+rhc create-app nginx http://cartreflect-claytondev.rhcloud.com/github/bcphung/openshift-cartridge-nginx
 ```
 
-Now clone the repository and create a `php` folder. Now copy the `usr/compile` directory from [this](https://github.com/boekkooi/openshift-cartridge-php) repository.
+Now clone the repository and create a `php` folder. Now copy the `usr/compile` directory from [this](https://github.com/bcphung/openshift-cartridge-php) repository.
 Now set the versions you need to compile in the `php/compile/versions` file. Commit and push the application repository.
 
 SSH into your app and go to the compile folder (`cd ${OPENSHIFT_REPO_DIR}/php/compile`) and start compiling by running the following commands:
@@ -107,7 +108,7 @@ rhc cartridge add -a myapp http://cartreflect-claytondev.rhcloud.com/github/<use
 ```
 
 ## Updates
-Updating this cartridge is not as easy as I would like because openshift online won't allow updates for downloaded cartridges.
+Updating this cartridge is not as easy as I would like because OpenShift online won't allow updates for downloaded cartridges.
 To update the cartridge you can do the following:
 ```BASH
 rhc cartridge remove -a myapp --confirm  php

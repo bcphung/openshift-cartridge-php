@@ -43,7 +43,6 @@ function install_php() {
         --with-gd \
         --with-jpeg-dir \
         --with-png-dir \
-        --with-png-dir \
         --with-xpm-dir \
         --with-freetype-dir \
         --without-pear \

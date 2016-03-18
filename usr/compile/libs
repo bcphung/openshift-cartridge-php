@@ -8,11 +8,11 @@ source common
 BUILD_DIR="${CURRENT_DIR}/tmp/"
 
 # Versions
-ICU_VERSION='54.1'
+ICU_VERSION='56.1'
 LIBMCRYPT_VERSION='2.5.8'
 LIBTOOL_VERSION='2.4.6'
-RE2C_VERSION='0.15.3'
-BISON_VERSION='2.7.1'
+RE2C_VERSION='0.16'
+BISON_VERSION='3.0.4'
 
 # Define functions
 function install_re2c() {
@@ -90,15 +90,15 @@ function install_libmcrypt() {
     pushd ${BUILD_DIR}
 
     # Get archive
-    download_and_unpack ${pkg} "http://sourceforge.net/projects/mcrypt/files/Libmcrypt/${LIBMCRYPT_VERSION}/${pkg}/download?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fmcrypt%2F&ts=${ts}&use_mirror=freefr"
+    download_and_unpack ${pkg} "https://github.com/winlibs/libmcrypt/releases/download/${LIBMCRYPT_VERSION}/${pkg}/download?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fmcrypt%2F&ts=${ts}&use_mirror=freefr"
     pushd libmcrypt-${LIBMCRYPT_VERSION}
 
     echo "Configuring LibMCrypt."
     ./configure \
         --disable-posix-threads \
         --enable-dynamic-loading \
-		--disable-shared \
-		--with-included-algos=cbc,cfb,ctr,ecb,ncfb,nofb,ofb,stream,cast-128,gost,rijndael-128,twofish,arcfour,cast-256,loki97,rijndael-192,saferplus,wake,blowfish-compat,des,rijndael-256,serpent,xtea,blowfish,enigma,rc2,tripledes \
+		    --disable-shared \
+		    --with-included-algos=cbc,cfb,ctr,ecb,ncfb,nofb,ofb,stream,cast-128,gost,rijndael-128,twofish,arcfour,cast-256,loki97,rijndael-192,saferplus,wake,blowfish-compat,des,rijndael-256,serpent,xtea,blowfish,enigma,rc2,tripledes \
         --prefix=${LIBS_DIR}
 
     echo "Compiling LibMCrypt."

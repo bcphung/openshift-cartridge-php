@@ -1,6 +1,6 @@
 # Compiling
 
-Create a [nginx](https://github.com/boekkooi/openshift-cartridge-nginx) based app and clone the repo.
+Create a [nginx](https://github.com/bcphung/openshift-cartridge-nginx) based app and clone the repo.
 Create a folder php in the git repo.
 Now copy the folder compile into this folder and commit and push.
 
